@@ -5,8 +5,16 @@
 
 .App {
   text-align: left;
+  margin: 5px 0 0 5px;
 }
 
 .Message {
   color: slateblue;
+}
+
+.input {
+  border: 1px solid rgb(177, 39, 39);
+  margin-right: 5px;
+  outline: none;
+  background-color: snow;
 }
