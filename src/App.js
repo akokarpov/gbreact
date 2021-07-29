@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { List, Paper, Grid } from '@material-ui/core';
-import { ListChat } from './components/ListChat';
-import { ListMessage } from './components/ListMessage';
-import { Form } from './components/Form';
+import { ChatsPage } from './pages/ChatsPage';
 import faker from 'faker';
 
 export default function App() {
@@ -53,25 +50,12 @@ export default function App() {
 
   return (
     <div className="App">
-      <Grid container spacing={3}>
-        <Grid item xs={3}>
-          <ListChat />
-        </Grid>
-        <Grid item xs={7}>
-          <Paper>
-            <List>
-              <ListMessage message={messagesList} />
-            </List>
-          </Paper>
-        </Grid>
-      </Grid>
-      <Grid
-        container
-        direction="column"
-        justifyContent="flex-end"
-        alignItems="center">
-        <Form handleSubmit={handleSubmit} message={message} setMessage={setMessage} />
-      </Grid>
+      <ChatsPage
+      message={message}
+      messagesList={messagesList}
+      handleSubmit={handleSubmit}
+      setMessage={setMessage}
+      />
     </div>
   );
 }
