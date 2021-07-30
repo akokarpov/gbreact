@@ -1,9 +1,7 @@
 import React from 'react';
 import { ListItem, ListItemAvatar, ListItemText, Avatar } from '@material-ui/core';
 import faker from 'faker';
-import { BrowserRouter, Link, Switch, Route } from 'react-router-dom';
-import { ListMessage } from './ListMessage';
-import { ChatItemPage } from '../pages/ChatItemPage';
+import { Link } from 'react-router-dom';
 
 const listChat = Array.from({
   length: 10,

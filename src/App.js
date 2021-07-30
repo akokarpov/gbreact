@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { ChatsPage } from './pages/ChatsPage';
 import faker from 'faker';
+import NavBar from './components/NavBar';
+import { BrowserRouter, Route } from 'react-router-dom';
+import Home from './pages/Home.js';
+import Profile from './pages/Profile';
 
 export default function App() {
 
@@ -49,13 +53,29 @@ export default function App() {
   };
 
   return (
-    <div className="App">
-      <ChatsPage
-      message={message}
-      messagesList={messagesList}
-      handleSubmit={handleSubmit}
-      setMessage={setMessage}
-      />
-    </div>
+    <BrowserRouter>
+      <div className="App">
+
+        <NavBar />
+
+        <Route exact path="/">
+          <Home />
+        </Route>
+
+        <Route exact path="/profile">
+          <Profile />
+        </Route>
+
+        <Route path="/chats">
+          <ChatsPage
+            message={message}
+            messagesList={messagesList}
+            handleSubmit={handleSubmit}
+            setMessage={setMessage} />
+        </Route>
+
+      </div>
+    </BrowserRouter>
+
   );
 }

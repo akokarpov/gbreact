@@ -6,17 +6,23 @@ import { ListMessage } from '../components/ListMessage';
 import { Form } from '../components/Form';
 
 export const ChatsPage = (props) => {
-  
-    return (
-        <div>
-        <Grid container spacing={3}>
+
+  return (
+    <div>
+      <Grid container spacing={3}>
         <Grid item xs={3}>
+
           <ListChat />
+
         </Grid>
         <Grid item xs={7}>
           <Paper>
             <List>
-              <ListMessage message={props.messagesList} />
+
+              <ListMessage
+              message={props.messagesList}
+              />
+
             </List>
           </Paper>
         </Grid>
@@ -26,12 +32,14 @@ export const ChatsPage = (props) => {
         direction="column"
         justifyContent="flex-end"
         alignItems="center">
+
         <Form
-        handleSubmit={props.handleSubmit}
-        message={props.message}
-        setMessage={props.setMessage}
+          handleSubmit={props.handleSubmit}
+          message={props.message}
+          setMessage={props.setMessage}
         />
+
       </Grid>)
-        </div>
-    );
-  };
+    </div>
+  );
+};
