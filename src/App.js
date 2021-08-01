@@ -47,6 +47,7 @@ export default function App() {
           avatar: faker.image.avatar(),
         }
       };
+      
       setMessages(messagesList.concat(userMessage));
       setMessage('');
     };

@@ -12,20 +12,21 @@ const listChat = Array.from({
 }))
 
 export const ListChat = () => {
+
   return (
 
     listChat.map((item, index) =>
 
-        <Link to={`/chats/chat_${index}`}>
+      <Link to={`/chats/chat_${index}`} key={index}>
 
-          <ListItem className="navlink" key={item.id}>
-            <ListItemAvatar>
-              <Avatar alt={item.name} src={item.avatar} />
-            </ListItemAvatar>
-            <ListItemText primary={item.name} />
-          </ListItem>
+        <ListItem className="navlink" key={item.id}>
+          <ListItemAvatar>
+            <Avatar alt={item.name} src={item.avatar} />
+          </ListItemAvatar>
+          <ListItemText primary={item.name} />
+        </ListItem>
 
-        </Link>
+      </Link>
     )
 
   );

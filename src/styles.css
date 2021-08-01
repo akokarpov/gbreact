@@ -38,3 +38,7 @@ a {
   background-color: lightgrey;
   min-height: 30px;
 }
+
+.activeNav {
+  background-color: lightpink;
+}

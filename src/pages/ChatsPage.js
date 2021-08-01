@@ -39,7 +39,7 @@ export const ChatsPage = (props) => {
           setMessage={props.setMessage}
         />
 
-      </Grid>)
+      </Grid>
     </div>
   );
 };
