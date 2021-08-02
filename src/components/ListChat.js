@@ -3,20 +3,21 @@ import { ListItem, ListItemAvatar, ListItemText, Avatar } from '@material-ui/cor
 import faker from 'faker';
 import { Link } from 'react-router-dom';
 
-const listChat = Array.from({
+export const initialChats = Array.from({
   length: 10,
-}).map(() => ({
-  id: faker.datatype.uuid(),
+}).map((_, index) => ({
+  id: `${index}`,
   avatar: faker.image.avatar(),
   name: faker.name.firstName(),
+  dialog: [],
 }))
 
 export const ListChat = () => {
   return (
 
-    listChat.map((item, index) =>
+    initialChats.map((item, index) =>
 
-        <Link to={`/chats/chat_${index}`}>
+        <Link key={item.id} to={`/chats/${index}`}>
 
           <ListItem className="navlink" key={item.id}>
             <ListItemAvatar>

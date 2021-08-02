@@ -1,11 +1,11 @@
 import React from 'react';
 import { ListItem, ListItemAvatar, ListItemText, Avatar, Typography } from '@material-ui/core';
 
-export const ListMessage = (props) => {
+export const Dialog = (props) => {
 
   return (
 
-    props.message.map((item) => (
+    props.dialog.map((item) => (
       <ListItem key={item.id} alignItems="flex-start">
         <ListItemAvatar>
           <Avatar alt={item.author.avatar} src={item.author.avatar} />
