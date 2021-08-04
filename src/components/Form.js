@@ -1,20 +1,66 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import faker from 'faker';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { addMessage } from '../store/messages/actions.js';
+import { getUserName } from '../store/profile/selectors.js';
 
-  export const Form = (props) => {
-    return (
- 
-      <form onSubmit={props.handleSubmit}>
-      <TextField autoFocus={true} id="standard-basic" label="😁 Message" type="text" value={props.message} onChange={e => props.setMessage(e.target.value)} />
-      <Button
-        variant="contained"
-        color="primary"
-        type="submit"
-      >
-        Send
-      </Button>
-    </form>
- 
-    );
+export const Form = () => {
+
+  const { chatId } = useParams();
+  const userName = useSelector(getUserName, shallowEqual);
+  const [value, setInputFieldValue] = useState('');
+  const dispatch = useDispatch();
+
+  const handleChange = (event) => {
+    setInputFieldValue(event.target.value);
+  }
+
+  const sendUserMessage = () => {
+    if (value !== '' && chatId !== undefined) {
+      let newUserMessage = {
+        userAvatar: faker.image.avatar(),
+        userName: userName,
+        userMessage: value,
+        createAt: faker.date.past().toISOString().slice(11, 19),
+      };
+      console.log(chatId);
+      dispatch(addMessage(chatId, newUserMessage));
+      setInputFieldValue('');
+    };
+  }
+
+const checkKey = (event) => {
+  if (event.code === "Enter") {
+    sendUserMessage();
   };
+}
+
+return (
+
+  <div>
+
+    <TextField
+      autoFocus={true}
+      id="standard-basic"
+      label="😁 Message"
+      type="text"
+      value={value}
+      onChange={handleChange}
+      onKeyDown={checkKey} />
+
+    <Button
+      variant="contained"
+      color="primary"
+      type="button"
+      onClick={sendUserMessage}
+    >
+      Send
+    </Button>
+
+  </div>
+
+);
+};

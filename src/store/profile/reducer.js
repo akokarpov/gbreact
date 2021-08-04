@@ -1,25 +1,28 @@
-import { TOGGLE_CHECKBOX } from "./actions.js"
+import { TOGGLE_CHECKBOX, CHANGE_NAME } from "./actions.js"
 
 export const profileInitialState = {
-    checkbox: " not checked",
+    checkbox: false,
+    checkboxStatus: "checked",
+    name: "Test Name",
 }
 
 export const profileReducer = (state = profileInitialState, action) => {
     switch (action.type) {
 
         case TOGGLE_CHECKBOX:
-
-            if (state.checkbox === " not checked") {
-                state.checkbox = " checked";
-            } else {
-                state.checkbox = " not checked";
-            }
             return {
-                checkbox: state.checkbox,
+                ...state,
+                checkbox: !state.checkbox,
             }
 
-        default: {
+        case CHANGE_NAME:
+            return {
+                ...state,
+                name: action.payload,
+            }
+
+        default:
             return state;
-        }
+
     }
 }

@@ -1,33 +1,37 @@
-import React from 'react';
-import { ListItem, ListItemAvatar, ListItemText, Avatar } from '@material-ui/core';
-import faker from 'faker';
+import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
-
-const listChat = Array.from({
-  length: 10,
-}).map(() => ({
-  id: faker.datatype.uuid(),
-  avatar: faker.image.avatar(),
-  name: faker.name.firstName(),
-}))
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { ListItem, ListItemAvatar, ListItemText, Avatar } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { removeChat } from '../store/chats/actions.js';
+import { removeDialog } from '../store/messages/actions.js';
+import { getChatList } from '../store/chats/selectors.js';
 
 export const ListChat = () => {
+  const chats = useSelector(getChatList, shallowEqual);
+  const dispatch = useDispatch();
+
+  const deleteChat = useCallback((event) => {
+    let chatId = event.nativeEvent.path[3].id;
+    console.log(chatId);
+    dispatch(removeDialog(chatId));
+    dispatch(removeChat(chatId));
+  }, [dispatch]);
 
   return (
-
-    listChat.map((item, index) =>
-
-      <Link to={`/chats/chat_${index}`} key={index}>
-
-        <ListItem className="navlink" key={item.id}>
+    chats.map((chat) =>
+      <Link key={chat.id} to={`/chats/${chat.id}`}>
+        <ListItem className="navlink" key={chat.id}>
           <ListItemAvatar>
-            <Avatar alt={item.name} src={item.avatar} />
+            <Avatar alt={chat.name} src={chat.avatar} />
           </ListItemAvatar>
-          <ListItemText primary={item.name} />
+          <ListItemText primary={chat.name} />
+          <IconButton onClick={deleteChat} id={chat.id} type="button">
+            <DeleteIcon />
+          </IconButton>
         </ListItem>
-
       </Link>
     )
-
   );
 };

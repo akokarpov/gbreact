@@ -42,3 +42,9 @@ a {
 .activeNav {
   background-color: lightpink;
 }
+
+.addNewChatBox {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
