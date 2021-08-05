@@ -3,7 +3,7 @@ import { TOGGLE_CHECKBOX, CHANGE_NAME } from "./actions.js"
 export const profileInitialState = {
     checkbox: false,
     checkboxStatus: "checked",
-    name: "Test Name",
+    name: "userName",
 }
 
 export const profileReducer = (state = profileInitialState, action) => {

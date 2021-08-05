@@ -26,7 +26,6 @@ export const Form = () => {
         userMessage: value,
         createAt: faker.date.past().toISOString().slice(11, 19),
       };
-      console.log(chatId);
       dispatch(addMessage(chatId, newUserMessage));
       setInputFieldValue('');
     };

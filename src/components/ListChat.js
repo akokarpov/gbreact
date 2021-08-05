@@ -12,9 +12,8 @@ export const ListChat = () => {
   const chats = useSelector(getChatList, shallowEqual);
   const dispatch = useDispatch();
 
-  const deleteChat = useCallback((event) => {
+  const onDeleteChat = useCallback((event) => {
     let chatId = event.nativeEvent.path[3].id;
-    console.log(chatId);
     dispatch(removeDialog(chatId));
     dispatch(removeChat(chatId));
   }, [dispatch]);
@@ -27,7 +26,7 @@ export const ListChat = () => {
             <Avatar alt={chat.name} src={chat.avatar} />
           </ListItemAvatar>
           <ListItemText primary={chat.name} />
-          <IconButton onClick={deleteChat} id={chat.id} type="button">
+          <IconButton onClick={onDeleteChat} id={chat.id} type="button">
             <DeleteIcon />
           </IconButton>
         </ListItem>
