@@ -7,6 +7,7 @@ const NavBar = () => {
         <NavLink className="navlink" exact to="/" activeClassName="activeNav">Home</NavLink>
         <NavLink className="navlink" to="/chats" activeClassName="activeNav">Chats</NavLink>
         <NavLink className="navlink" exact to="/profile" activeClassName="activeNav">Profile</NavLink>
+        <NavLink className="navlink" exact to="/weather" activeClassName="activeNav">Weather API</NavLink>
         </div>
     );
 }

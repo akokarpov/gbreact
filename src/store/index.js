@@ -7,6 +7,7 @@ import { messagesReducer, addMessage, ADD_MESSAGE } from './messages';
 import faker from 'faker';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import { weatherReducer } from './weather';
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   profile: profileReducer,
   chats: chatsReducer,
   messages: messagesReducer,
+  weather: weatherReducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

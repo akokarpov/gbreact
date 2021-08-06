@@ -1,8 +1,9 @@
 
 import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { toggleStatus, changeName } from '../store/profile/actions.js';
+import { toggleStatus, changeName, changeCityName } from '../store/profile/actions.js';
 import { getUserName } from '../store/profile/selectors.js';
+import { getUserCity } from '../store/profile/selectors.js';
 
 const Profile = () => {
 
@@ -11,11 +12,18 @@ const Profile = () => {
     });
 
     const name = useSelector(getUserName, shallowEqual);
+    const city = useSelector(getUserCity, shallowEqual);
 
-    const [value, setValue] = useState('');
+    const [valueUserName, setValueUserName] = useState('');
+    const [valueCityName, setValueCityName] = useState('');
 
-    const handleChange = useCallback((e) => {
-        setValue(e.target.value);
+    const handleChangeUserName = useCallback((e) => {
+        setValueUserName(e.target.value);
+    }, []);
+
+
+    const handleChangeCityName = useCallback((e) => {
+        setValueCityName(e.target.value);
     }, []);
 
     const dispatch = useDispatch();
@@ -25,15 +33,27 @@ const Profile = () => {
     }, [dispatch]);
 
     const setName = useCallback(() => {
-        if (value !== '') {
-            dispatch(changeName(value))
+        if (valueUserName !== '') {
+            dispatch(changeName(valueUserName))
         }
-    }, [dispatch, value]);
+    }, [dispatch, valueUserName]);
+
+    const setCity = useCallback(() => {
+        if (valueCityName !== '') {
+            dispatch(changeCityName(valueCityName))
+        }
+    }, [dispatch, valueCityName]);
 
 
-    const checkKey = (event) => {
+    const checkKeyUserName = (event) => {
         if (event.code === "Enter") {
             setName();
+        };
+    }
+
+    const checkKeyCityName = (event) => {
+        if (event.code === "Enter") {
+            setCity();
         };
     }
 
@@ -41,7 +61,7 @@ const Profile = () => {
         <div>
 
             <h2>Profile</h2>
-
+            <br />
             <div>
                 <label>Test checkbox: </label>
                 <input
@@ -50,12 +70,17 @@ const Profile = () => {
                 ></input>
                 <span>{status}</span>
             </div>
-
+            <br />
             <span>Name: {name}</span>
-
             <div>
-                <input type="text" value={value} onChange={handleChange} onKeyDown={checkKey} />
+                <input type="text" value={valueUserName} onChange={handleChangeUserName} onKeyDown={checkKeyUserName} />
                 <button type="button" onClick={setName}>Set Name</button>
+            </div>
+            <br />
+            <span>City: {city}</span>
+            <div>
+                <input type="text" value={valueCityName} onChange={handleChangeCityName} onKeyDown={checkKeyCityName} />
+                <button type="button" onClick={setCity}>Set City</button>
             </div>
 
         </div>

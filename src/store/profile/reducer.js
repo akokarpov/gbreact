@@ -1,9 +1,10 @@
-import { TOGGLE_CHECKBOX, CHANGE_NAME } from "./actions.js"
+import { TOGGLE_CHECKBOX, CHANGE_NAME, CHANGE_CITY } from "./actions.js"
 
 export const profileInitialState = {
     checkbox: false,
     checkboxStatus: "checked",
     name: "userName",
+    city: "Brussels",
 }
 
 export const profileReducer = (state = profileInitialState, action) => {
@@ -19,6 +20,12 @@ export const profileReducer = (state = profileInitialState, action) => {
             return {
                 ...state,
                 name: action.payload,
+            }
+
+        case CHANGE_CITY:
+            return {
+                ...state,
+                city: action.payload,
             }
 
         default:

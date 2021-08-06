@@ -4,6 +4,7 @@ import Profile from './pages/Profile';
 import { Chats } from './pages/Chats';
 import NavBar from './components/NavBar';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Weather } from './pages/Weather.js';
 
 
 export default function App() {
@@ -27,6 +28,10 @@ export default function App() {
 
         <Route path="/chats/:chatId">
           <Chats />
+        </Route>
+
+        <Route exact path="/weather">
+          <Weather />
         </Route>
 
         <Route>
