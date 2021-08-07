@@ -1,5 +1,5 @@
 
-import { GET_WEATHER_REQUEST, GET_WEATHER_SUCCESS, GET_WEATHER_FAILURE } from "./actions.js"; 
+import { GET_WEATHER_REQUEST, GET_WEATHER_SUCCESS, GET_WEATHER_FAILURE } from "./actions.js";
 
 export const STATUSES = {
     IDLE: 0,
@@ -23,6 +23,7 @@ export const weatherReducer = (state = initialState, action) => {
                 ...state,
                 request: STATUSES.REQUEST,
                 loading: action.loading,
+                error: action.error,
             };
         case GET_WEATHER_SUCCESS:
             return {

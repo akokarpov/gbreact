@@ -14,10 +14,10 @@ export const Weather = () => {
   const error = useSelector(isError);
   const loading = useSelector(isLoading);
 
-  const API_KEY = "https://goweather.herokuapp.com/weather/" + cityName;
+  const API_ENDPOINT = "https://goweather.herokuapp.com/weather/" + cityName;
 
   const requestWeather = () => {
-    dispatch(sendWeatherApiRequest(API_KEY));
+    dispatch(sendWeatherApiRequest(API_ENDPOINT));
   };
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export const Weather = () => {
     return <div className="flexCenter"> <CircularProgress /> </div>;
   }
 
-  if (loading && error) {
+  if (error) {
     return (
       <div>
         <h3>Error</h3>
@@ -37,6 +37,7 @@ export const Weather = () => {
       </div>
     );
   }
+
   return (
     <div>
       <p>{cityName}</p>

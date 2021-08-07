@@ -6,6 +6,7 @@ export const GET_WEATHER_FAILURE = "WEATHER::GET_WEATHER_FAILURE";
 export const getWeatherRequest = () => ({
     type: GET_WEATHER_REQUEST,
     loading: true,
+    error: null,
 });
 
 export const getWeatherSuccess = (data) => ({
