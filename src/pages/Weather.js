@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { getWeather, isError, isLoading } from '../store/weather/selectors.js';
@@ -16,13 +16,13 @@ export const Weather = () => {
 
   const API_ENDPOINT = "https://goweather.herokuapp.com/weather/" + cityName;
 
-  const requestWeather = () => {
+  const requestWeather = useCallback(() => {
     dispatch(sendWeatherApiRequest(API_ENDPOINT));
-  };
+  }, [API_ENDPOINT, dispatch])
 
   useEffect(() => {
     requestWeather();
-  }, []);
+  }, [requestWeather]);
 
 
   if (loading) {
