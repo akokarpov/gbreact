@@ -1,3 +1,4 @@
+import { db } from "../../firebase";
 
 export const TOGGLE_CHECKBOX = 'TOGGLE_CHECKBOX';
 export const toggleStatus = () => ({
@@ -15,3 +16,17 @@ export const changeCityName = (cityName) => ({
     type: CHANGE_CITY,
     payload: cityName,
 });
+
+export const changeProfileNameWithFirebase = (newName) => async () => {
+    db.ref("username").set(newName);
+  };
+  
+  export const initProfileNameTracking = () => (dispatch) => {
+    db.ref("username").on("value", (snapshot) => {
+      dispatch(changeName(snapshot._delegate._node.value_));
+    });
+  
+    db.ref("username").on("value", (snapshot) => {
+      dispatch(changeName(snapshot._delegate._node.value_));
+    });
+  }

@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import faker from 'faker';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { addMessage } from '../store/messages/actions.js';
+import { addMessageWithFirebase, initMessageTracking } from '../store/messages/actions.js';
 import { getUserName } from '../store/profile/selectors.js';
 
 export const Form = () => {
@@ -26,7 +26,7 @@ export const Form = () => {
         userMessage: value,
         createAt: faker.date.past().toISOString().slice(11, 19),
       };
-      dispatch(addMessage(chatId, newUserMessage));
+      dispatch(addMessageWithFirebase(chatId, newUserMessage));
       setInputFieldValue('');
     };
   }
@@ -36,6 +36,10 @@ const checkKey = (event) => {
     sendUserMessage();
   };
 }
+
+useEffect(() => {
+  dispatch(initMessageTracking());
+}, [dispatch]);
 
 return (
 

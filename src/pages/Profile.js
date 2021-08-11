@@ -1,18 +1,20 @@
 
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { toggleStatus, changeName, changeCityName } from '../store/profile/actions.js';
-import { getUserName } from '../store/profile/selectors.js';
-import { getUserCity } from '../store/profile/selectors.js';
+import { toggleStatus, changeCityName, changeProfileNameWithFirebase, initProfileNameTracking } from '../store/profile/actions.js';
+import { getUserName, getUserCity, getCheckBoxStatus } from '../store/profile/selectors.js';
 
 const Profile = () => {
 
-    const status = useSelector((state) => {
-        if (state.profile.checkbox) return state.profile.checkboxStatus;
-    });
-
+    const status = useSelector(getCheckBoxStatus, shallowEqual);
     const name = useSelector(getUserName, shallowEqual);
     const city = useSelector(getUserCity, shallowEqual);
+
+    const statusMessage = () => {
+        if(!status) {
+            return 'checked'
+        }
+    }
 
     const [valueUserName, setValueUserName] = useState('');
     const [valueCityName, setValueCityName] = useState('');
@@ -34,9 +36,13 @@ const Profile = () => {
 
     const setName = useCallback(() => {
         if (valueUserName !== '') {
-            dispatch(changeName(valueUserName))
+            dispatch(changeProfileNameWithFirebase(valueUserName))
         }
     }, [dispatch, valueUserName]);
+
+    useEffect(() => {
+        dispatch(initProfileNameTracking());
+      }, [dispatch]);
 
     const setCity = useCallback(() => {
         if (valueCityName !== '') {
@@ -68,7 +74,7 @@ const Profile = () => {
                     type="checkbox"
                     onChange={toggleCheckbox}
                 ></input>
-                <span>{status}</span>
+                <span>{statusMessage()}</span>
             </div>
             <br />
             <span>Name: {name}</span>
