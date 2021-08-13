@@ -7,7 +7,7 @@ import { BrowserRouter, Switch } from 'react-router-dom';
 import { SignUp } from './pages/SignUp';
 import { Login } from './pages/Login';
 import { Weather } from './pages/Weather';
-import firebase from "firebase";
+import firebase from 'firebase/app';
 import PublicRoute from './hocs/PublicRoute.js';
 import PrivateRoute from './hocs/PrivateRoute.js';
 
@@ -50,7 +50,7 @@ export default function App() {
           <Chats />
         </PrivateRoute>
 
-        <PrivateRoute authenticated={authed} path="/chats/:chatId">
+        <PrivateRoute authenticated={authed} exact path="/chats/:chatId">
           <Chats />
         </PrivateRoute>
 

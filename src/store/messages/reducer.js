@@ -1,17 +1,18 @@
 import { ADD_MESSAGE, REMOVE_DIALOG } from "./actions";
 
-const initialState = {
+export const initialState = {
   messageList: {},
 };
 
 export const messagesReducer = (state = initialState, action) => {
-  switch (action.type) {
+  switch (action?.type) {
     case ADD_MESSAGE: {
+      let currentDialog = state.messageList[action.chatId] || [];
+      currentDialog.push(action.message);
       return {
-          ...state,
           messageList: {
-            ...state.messageList,
-            [action.chatId]: action.message,
+            ...state,
+            [action.chatId]: currentDialog,
           },
       };
     }

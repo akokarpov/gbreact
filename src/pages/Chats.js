@@ -4,13 +4,13 @@ import { ListChat } from '../components/ListChat';
 import { Dialog } from '../components/Dialog';
 import { Form } from '../components/Form';
 import { useDispatch } from 'react-redux';
-import { addChat } from '../store/chats/actions.js';
+import { addChatWithFirebase } from '../store/chats/actions.js';
 import Button from '@material-ui/core/Button';
 
 export const Chats = () => {
 
   const dispatch = useDispatch();
-  const onAddChat = () => dispatch(addChat());
+  const onAddChat = () => dispatch(addChatWithFirebase());
 
   return (
     <div>
