@@ -12,15 +12,15 @@ import faker from 'faker';
 const getRandNum = () => Math.floor(Math.random() * 100000);
 const idsArrayFromFirebase = [];
 db.ref("chats").once("value", (snapshot) => {
-  snapshot.forEach((chatId) => idsArrayFromFirebase.push(chatId.key));
+  snapshot.forEach(chat => idsArrayFromFirebase.push(chat.val().id));
 });
 
 export const Chats = () => {
   const dispatch = useDispatch();
   const onAddChat = () => {
     let newChatId = getRandNum();
-    idsArrayFromFirebase.forEach((chatId) => {
-      if (chatId.key === newChatId) newChatId = getRandNum();
+    idsArrayFromFirebase.forEach(chatId => {
+      if (chatId === newChatId) newChatId = getRandNum();
     });
     let newChat = {
       id: newChatId,

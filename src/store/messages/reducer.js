@@ -10,6 +10,7 @@ export const messagesReducer = (state = initialState, action) => {
       let currentDialog = state.messageList[action.chatId] || [];
       currentDialog.push(action.message);
       return {
+        ...state.messageList,
           messageList: {
             ...state,
             [action.chatId]: currentDialog,
