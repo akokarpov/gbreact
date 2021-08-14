@@ -2,23 +2,24 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { initialState, messagesReducer } from '../store/messages/reducer.js';
 import { addMessage, removeDialog } from '../store/messages/actions.js';
 import { createStore } from 'redux';
+import { renderHook, act } from '@testing-library/react-hooks'
+import { Form } from './Form.js';
 
-describe('test Form component to send message', () => {
+test('should not send empty value to reducer ?????????', () => {
+  
+  const { result } = renderHook(() => Form())
 
-  it('send message to store', () => {
+  const store = createStore();
+  
+  const component = render(
+    <Provider store={store}>
+      <Form />
+    </Provider>
+  );
 
-    const store = createStore();
-    const component = render(
-      <Provider store={store}>
-        <Form />
-      </Provider>
-    );
+  act(() => {
+    result.current.sendUserMessage()
+  })
 
-    // fireEvent.submit(component);
-    // const actions = store.getActions();
-    // const lastAction = actions[actions.length - 1];
-
-    expect(store.getState()).toEqual("add state here...");
-  });
-
-});
+  expect(result.current.value).toBe('')
+})
