@@ -9,32 +9,25 @@ import Button from '@material-ui/core/Button';
 import { db } from '../firebase';
 import faker from 'faker';
 
-let chatId = 0;
-
-const getChatIdFromFirebase = (snapshot) => {
-  if (snapshot === null) return 0;
-  const chats = [];
-  snapshot.forEach((chat) => {
-    chats.push(chat.val());
-    console.log(chat.val())
-  });
-  return chats.length
-}
-
+const getRandNum = () => Math.floor(Math.random() * 100000);
+const idsArrayFromFirebase = [];
 db.ref("chats").once("value", (snapshot) => {
-  chatId = getChatIdFromFirebase(snapshot);
+  snapshot.forEach((chatId) => idsArrayFromFirebase.push(chatId.key));
 });
 
 export const Chats = () => {
   const dispatch = useDispatch();
   const onAddChat = () => {
+    let newChatId = getRandNum();
+    idsArrayFromFirebase.forEach((chatId) => {
+      if (chatId.key === newChatId) newChatId = getRandNum();
+    });
     let newChat = {
-      id: chatId,
+      id: newChatId,
       avatar: faker.image.avatar(),
       name: faker.name.firstName(),
     };
-    dispatch(addChatWithFirebase(chatId, newChat));
-    chatId += 1;
+    dispatch(addChatWithFirebase(newChatId, newChat));
   };
 
   return (
