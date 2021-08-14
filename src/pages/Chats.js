@@ -6,11 +6,36 @@ import { Form } from '../components/Form';
 import { useDispatch } from 'react-redux';
 import { addChatWithFirebase } from '../store/chats/actions.js';
 import Button from '@material-ui/core/Button';
+import { db } from '../firebase';
+import faker from 'faker';
+
+let chatId = 0;
+
+const getChatIdFromFirebase = (snapshot) => {
+  if (snapshot === null) return 0;
+  const chats = [];
+  snapshot.forEach((chat) => {
+    chats.push(chat.val());
+    console.log(chat.val())
+  });
+  return chats.length
+}
+
+db.ref("chats").once("value", (snapshot) => {
+  chatId = getChatIdFromFirebase(snapshot);
+});
 
 export const Chats = () => {
-
   const dispatch = useDispatch();
-  const onAddChat = () => dispatch(addChatWithFirebase());
+  const onAddChat = () => {
+    let newChat = {
+      id: chatId,
+      avatar: faker.image.avatar(),
+      name: faker.name.firstName(),
+    };
+    dispatch(addChatWithFirebase(chatId, newChat));
+    chatId += 1;
+  };
 
   return (
     <div>

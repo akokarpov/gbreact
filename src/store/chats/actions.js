@@ -1,5 +1,4 @@
 import { db } from '../../firebase';
-import faker from 'faker';
 
 export const ADD_CHAT = 'CHATS::ADD_CHAT';
 export const addChat = (chat) => ({
@@ -13,17 +12,9 @@ export const removeChat = (chatId) => ({
   chatId,
 });
 
-let chatCounter = 0;
-
-export const addChatWithFirebase = () => async (dispatch) => {
-  let newChat = {
-    id: chatCounter,
-    avatar: faker.image.avatar(),
-    name: faker.name.firstName(),
-  };
-  db.ref("chats").child(chatCounter).set(newChat);
+export const addChatWithFirebase = (chatId, newChat) => async (dispatch) => {
+  db.ref("chats").child(chatId).set(newChat);
   dispatch(addChat(newChat));
-  chatCounter += 1;
 };
 
 export const removeChatWithFirebase = (chatId) => async (dispatch) => {
