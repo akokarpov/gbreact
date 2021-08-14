@@ -3,7 +3,7 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { profileReducer } from './profile';
 import { chatsReducer } from './chats';
-import { messagesReducer, addMessage, ADD_MESSAGE } from './messages';
+import { messagesReducer, ADD_MESSAGE, addMessageWithFirebase } from './messages';
 import faker from 'faker';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
@@ -26,15 +26,20 @@ const rootReducer = combineReducers({
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const botResponder = () => (dispatch) => (action) => {
-
-  if (action.type === ADD_MESSAGE && action.userName !== `Bot`) {
+  if (action.message) {
+    // console.log(action.message[action.message.length - 1].userName)
+  }
+  if (action.type === ADD_MESSAGE && action.message && action.message[action.message.length - 1].userName !== `Bot`) {
+    // console.log(action.message[action.message.length - 1].userName)
     let botMessage = {
       userAvatar: faker.image.avatar(),
       userName: `Bot`,
-      userMessage: `Hello, ${action.message.userName}!`,
+      userMessage: `Hello, ${action.message[0].userName}!`,
       createAt: faker.date.past().toISOString().slice(11, 19),
     };
-    setTimeout(() => dispatch(addMessage(action.chatId, botMessage)), 1500);
+    setTimeout(() => {
+      dispatch(addMessageWithFirebase(action.chatId, botMessage));
+    }, 1500);
   }
   dispatch(action);
 }
@@ -42,6 +47,6 @@ const botResponder = () => (dispatch) => (action) => {
 export const store = createStore(
   persistedReducer,
   composeEnhancer(applyMiddleware(botResponder, thunk))
-  );
-  
-  export const persistor = persistStore(store);
+);
+
+export const persistor = persistStore(store);

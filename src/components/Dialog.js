@@ -14,7 +14,6 @@ export const Dialog = () => {
   if (chatId === undefined || messagesArray === undefined) {
     return <div>No Messages Yet!</div>
   } else {
-
     return (
 
       messagesArray.map((chat, index) => (
