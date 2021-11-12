@@ -3,7 +3,8 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { profileReducer } from './profile';
 import { chatsReducer } from './chats';
-import { messagesReducer, ADD_MESSAGE, addMessageWithFirebase } from './messages';
+import { messagesReducer } from './messages';
+import { ADD_MESSAGE, addMessageWithFirebase } from './messages';
 import faker from 'faker';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
@@ -12,7 +13,7 @@ import { weatherReducer } from './weather';
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 const persistConfig = {
-  key: 'root',
+  key: 'root7',
   storage,
 }
 
@@ -26,15 +27,11 @@ const rootReducer = combineReducers({
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const botResponder = () => (dispatch) => (action) => {
-  if (action.message) {
-    // console.log(action.message[action.message.length - 1].userName)
-  }
-  if (action.type === ADD_MESSAGE && action.message && action.message[action.message.length - 1].userName !== `Bot`) {
-    // console.log(action.message[action.message.length - 1].userName)
+  if (action.type === ADD_MESSAGE && action.message['userName'] !== undefined && action.message['userName'] !== `Bot`) {
     let botMessage = {
       userAvatar: faker.image.avatar(),
       userName: `Bot`,
-      userMessage: `Hello, ${action.message[0].userName}!`,
+      userMessage: `Hello, ${action.message['userName']}!`,
       createAt: faker.date.past().toISOString().slice(11, 19),
     };
     setTimeout(() => {

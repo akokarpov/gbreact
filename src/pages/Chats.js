@@ -4,13 +4,31 @@ import { ListChat } from '../components/ListChat';
 import { Dialog } from '../components/Dialog';
 import { Form } from '../components/Form';
 import { useDispatch } from 'react-redux';
-import { addChat } from '../store/chats/actions.js';
+import { addChatWithFirebase } from '../store/chats/actions.js';
 import Button from '@material-ui/core/Button';
+import { db } from '../firebase';
+import faker from 'faker';
+
+const getRandNum = () => Math.floor(Math.random() * 100000);
+const idsArrayFromFirebase = [];
+db.ref("chats").once("value", (snapshot) => {
+  snapshot.forEach(chat => idsArrayFromFirebase.push(chat.val().id));
+});
 
 export const Chats = () => {
-
   const dispatch = useDispatch();
-  const onAddChat = () => dispatch(addChat());
+  const onAddChat = () => {
+    let newChatId = getRandNum();
+    idsArrayFromFirebase.forEach(chatId => {
+      if (chatId === newChatId) newChatId = getRandNum();
+    });
+    let newChat = {
+      id: newChatId,
+      avatar: faker.image.avatar(),
+      name: faker.name.firstName(),
+    };
+    dispatch(addChatWithFirebase(newChatId, newChat));
+  };
 
   return (
     <div>

@@ -13,30 +13,12 @@ export const removeDialog = (chatId) => ({
   chatId,
 });
 
-const getPayloadFromSnapshot = (snapshot) => {
-  const messages = [];
-
-  snapshot.forEach((mes) => {
-    messages.push(mes.val());
-  });
-
-  return { chatId: snapshot.key, messages }
-}
-
-export const addMessageWithFirebase = (chatId, message) => async () => {
-  db.ref("messages").child(chatId).push(message);
+export const addMessageWithFirebase = (chatId, newMessage) => async (dispatch) => {
+  db.ref("messages").child(chatId).push(newMessage);
+  dispatch(addMessage(chatId, newMessage));
 };
 
-export const initMessageTracking = () => (dispatch) => {
-  db.ref("messages").on("child_changed", (snapshot) => {
-    const payload = getPayloadFromSnapshot(snapshot);
-    console.log("child changed")
-    dispatch(addMessage(payload.chatId, payload.messages));
-  });
-
-  db.ref("messages").on("child_added", (snapshot) => {
-    const payload = getPayloadFromSnapshot(snapshot);
-    console.log("child added")
-    dispatch(addMessage(payload.chatId, payload.messages));
-  });
-}
+export const removeDialogWithFirebase = (chatId) => async (dispatch) => {
+  db.ref("messages").child(chatId).remove();
+  dispatch(removeDialog(chatId));
+};

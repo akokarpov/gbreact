@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import faker from 'faker';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { addMessageWithFirebase, initMessageTracking } from '../store/messages/actions.js';
+import { addMessageWithFirebase } from '../store/messages/actions.js';
 import { getUserName } from '../store/profile/selectors.js';
 
 export const Form = () => {
@@ -36,10 +36,6 @@ const checkKey = (event) => {
     sendUserMessage();
   };
 }
-
-useEffect(() => {
-  dispatch(initMessageTracking());
-}, [dispatch]);
 
 return (
 

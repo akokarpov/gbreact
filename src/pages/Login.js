@@ -1,6 +1,7 @@
 
 import React, { useState } from "react";
-import firebase from "firebase";
+import firebase from 'firebase/app';
+import 'firebase/auth';
 import { Link } from "react-router-dom";
 
 export const Login = () => {
